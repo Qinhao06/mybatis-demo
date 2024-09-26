@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper>
+
+<mapper namespace="com.example.mapper.UserMapper">
+
+    <!-- 查询所有用户 -->
+    <select id="selectAllUsers" resultType="User">
+        SELECT id, name, email
+        FROM user
+    </select>
+
+    <!-- 根据ID查询用户 -->
+    <select id="selectUserById" parameterType="int" resultType="User">
+        SELECT id, name, email
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+    <!-- 插入用户 -->
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO user (name, email)
+        VALUES (#{username}, #{email})
+    </insert>
+
+    <!-- 更新用户 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE user
+        SET name = #{username}, email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+</mapper>
