@@ -37,7 +37,6 @@ public class JDBCConnectionPoolManager extends BaseConnectionManager{
     @Override
     public Connection getConnection() {
         synchronized (JDBCConnectionPoolManager.class){
-            System.out.println(nowPoolSize);
             if (connectionPool.isEmpty() && nowPoolSize < maxPoolSize){
                 nowPoolSize++;
                 try {

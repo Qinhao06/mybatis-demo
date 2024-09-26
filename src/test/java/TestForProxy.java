@@ -6,8 +6,6 @@ import org.example.connection.JDBCSimpleConnectionManager;
 import org.example.proxy.MapperProxyFactory;
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 public class TestForProxy {
 
     @Test
@@ -24,7 +22,7 @@ public class TestForProxy {
     }
 
     @Test
-    public void testConnectionPoolExecute() throws SQLException {
+    public void testConnectionPoolExecute() {
         JDBCConnectionPoolManager jdbcSimpleConnectionManager = new JDBCConnectionPoolManager(5, 2);
         MapperProxyFactory mapperProxyFactory =
                 new MapperProxyFactory(Configuration.getConfiguration(), jdbcSimpleConnectionManager);
@@ -39,9 +37,8 @@ public class TestForProxy {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         JDBCConnectionPoolManager jdbcSimpleConnectionManager = new JDBCConnectionPoolManager(5, 2);
-        JDBCSimpleConnectionManager jdbcSimpleConnectionManager2 = new JDBCSimpleConnectionManager();
         MapperProxyFactory mapperProxyFactory =
                 new MapperProxyFactory(Configuration.getConfiguration(), jdbcSimpleConnectionManager);
         for (int i = 40; i < 60; i++) {
@@ -49,8 +46,13 @@ public class TestForProxy {
                 UserMapper mapperProxy = (UserMapper)mapperProxyFactory.getMapperProxy(UserMapper.class);
                 User users = mapperProxy.selectUserById(10);
                 System.out.println( users);
-
             }).start();
         }
+
+        Thread.sleep(1000);
+        UserMapper mapperProxy = (UserMapper)mapperProxyFactory.getMapperProxy(UserMapper.class);
+        User users = mapperProxy.selectUserById(10);
+        System.out.println( users);
+
     }
 }
